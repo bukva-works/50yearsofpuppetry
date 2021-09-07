@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>e86sx_002</title>
+	<meta charset="utf-8">
+	<!-- Compiled w/ P5LIVE, http://github.com/ffd8/p5live -->
+	<style type="text/css">
+		body{
+			margin:0;
+			overflow:hidden;
+		}
+		canvas{
+			position:fixed;
+			top:0;
+			left:0;
+			z-index:-1;
+			width:100vw;
+			height:100vh;
+			margin:0;
+		}
+	</style>
+	<script type="text/javascript">
+		// eco-mode = only render if window focused
+		window.onblur = function () {
+			noLoop();
+		};
+		window.onfocus = function () {
+			loop();
+		};
+	</script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/addons/p5.sound.min.js"></script>
+</head>
+<body>
+
+<script type="text/javascript">
+//e86sx_002
+
+/* CUSTOM FUNCTIONS FOR P5LIVE */
+// keep fullscreen if window resized
+function windowResized() {
+	resizeCanvas(windowWidth, windowHeight);
+}
+
+// custom ease function
+function ease(iVal, oVal, eVal){
+	return oVal += (iVal - oVal) * eVal;
+}
+
+// processing compatibility
+function println(msg){
+	print(msg);
+}
+
+
+let sliderX;
+let sliderY;
+let sliderScale;
+let sliderRange;
+let sliderSin;
+let sliderI;
+let sliderSize;
+
+function setup() {
+	createCanvas(windowWidth, windowHeight);
+
+	sliderX = createSlider(50, 300, 150, 10);
+	sliderX.position(100, 20);
+
+	sliderY = createSlider(0, height / 5, 0, 10);
+	sliderY.position(100, 40);
+
+	sliderScale = createSlider(151, 170, 151, 1);
+	sliderScale.position(100, 60);
+
+	sliderRange = createSlider(.1, 1, .4, .01);
+	sliderRange.position(100, 80);
+
+	sliderSin = createSlider(1, 1000, 1, .2);
+	sliderSin.position(100, 100);
+
+	sliderI = createSlider(5, 20, 10, 1);
+	sliderI.position(100, 120);
+
+	sliderSize = createSlider(200, 1000, 700, 10);
+	sliderSize.position(100, 140);
+}
+
+function draw() {
+	background(0)
+
+	let loopCount = sliderI.value();
+	// fill(0);
+	noFill()
+	stroke(255);
+	strokeWeight(2);
+
+	for(let i = 1; i < loopCount; i++) {
+		// if you want animation.. use 'frameCount' (built in) or make your own..
+
+		// if(){} // use TONS of them
+		// ellipse(200 + (sliderX.value() * i), height / 2 - sin(i * sliderRange.value() + sliderSin.value() * .008) * sliderY.value(), sin(i * sliderScale.value() * .02) * sliderSize.value());
+		
+		let x = sliderX.value()*i
+		let y = height/2 - sin(i*sliderRange.value() + sliderSin.value()*.008)*sliderY.value()
+		
+		// changing my mind... 
+		// x = width/2 - sin(i*sliderRange.value() + sliderSin.value()*.008)*sliderY.value()
+		// y = sliderX.value()*i
+		let mysize = i*sliderScale.value()
+	
+	
+		ellipse(x, y, mysize);
+
+		// translate(width/2, 0);
+
+		// ellipse(sliderX.value()*i, height/2, i*sliderY.value());
+		// ellipse(width/2+circleX, height/2, i*sliderY.value());
+	}
+}
+</script>
+
+</body>
+</html>
